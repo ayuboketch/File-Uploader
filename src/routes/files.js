@@ -3,7 +3,7 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const multer = require('multer');
 const path = require('path');
-const { isAuthenticated } = require('./auth'); // Import the auth middleware
+const { isAuthenticated } = require('../middleware/auth'); // Import the auth middleware
 const prisma = new PrismaClient();
 
 // Configure multer for file upload
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ 
+const upload = multer({
     storage: storage,
     limits: {
         fileSize: 10 * 1024 * 1024 // 10MB limit
@@ -24,10 +24,11 @@ const upload = multer({
 });
 
 // Route to handle file upload
-router.post('/upload', 
+router.post('/upload',
     isAuthenticated,
     upload.single('file'),
     async (req, res) => {
+        console.log('File upload route reached'); // Debugging log
         try {
             if (!req.file) {
                 return res.status(400).json({ message: 'No file uploaded' });
