@@ -5,6 +5,12 @@ const multer = require('multer');
 const path = require('path');
 const { isAuthenticated } = require('../middleware/auth'); // Import the auth middleware
 const prisma = new PrismaClient();
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Configure multer for file upload
 const storage = multer.diskStorage({

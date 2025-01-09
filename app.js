@@ -15,6 +15,8 @@ const folderRoutes = require('./src/routes/folders');
 // Initialize express
 const app = express();
 
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
